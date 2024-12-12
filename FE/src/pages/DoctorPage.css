@@ -52,4 +52,32 @@
     background-color: #d32f2f;
     transform: translateY(-2px);
   }
+  .alert-container {
+    width: 80%;
+    max-width: 400px;
+    animation: fadeIn 0.5s ease-out, fadeOut 0.5s 2.5s ease-in;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -60%);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+    }
+  }
+  
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+    }
+    to {
+      opacity: 0;
+      transform: translate(-50%, -40%);
+    }
+  }
+  
   

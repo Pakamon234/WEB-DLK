@@ -58,28 +58,36 @@ const Login = () => {
     };
 
     return (
-        <div className="login-container">
-            <h1>Đăng nhập</h1>
-            <form onSubmit={handleSubmit}>
-                <FormInput
-                    label="Tên đăng nhập"
-                    type="text"
-                    id="username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-                <FormInput
-                    label="Mật khẩu"
-                    type="password"
-                    id="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <button type="submit" disabled={isLoading}>
-                    {isLoading ? "Đang xử lý..." : "Đăng nhập"}
-                </button>
-            </form>
-            <Message message={message} />
+        <div className="login-wrapper">
+      <div className="login-container">
+      <h1>Đăng nhập</h1>
+    <form onSubmit={handleSubmit}>
+        <div className="form-group">
+            <label htmlFor="username">Tên đăng nhập</label>
+            <input
+                type="text"
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Nhập tên đăng nhập"
+            />
+        </div>
+        <div className="form-group">
+            <label htmlFor="password">Mật khẩu</label>
+            <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Nhập mật khẩu"
+            />
+        </div>
+        <button type="submit" disabled={isLoading}>
+            {isLoading ? "Đang xử lý..." : "Đăng nhập"}
+        </button>
+    </form>
+    {message && <p className="message">{message}</p>}
+        </div>
         </div>
     );
 };

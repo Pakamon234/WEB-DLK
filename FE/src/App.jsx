@@ -1,6 +1,6 @@
 // App.jsx
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route,useLocation  } from 'react-router-dom';
 import Login from './pages/Login'; // Trang Login
 import AdminPage from './pages/AdminPage';
 import UserPage from './UserPage';  // Trang User
@@ -8,6 +8,7 @@ import DoctorPage from './pages/DoctorPage';
 import PatientPage from './PatientPage';
 import HomePage from './pages/HomePage';
 function App() {
+
   return (
     
       <Routes>
