@@ -1,0 +1,53 @@
+.admin-page {
+  display: flex;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+.sidebar {
+  width: 150px; /* Chiều rộng sidebar */
+  height: 100vh; /* Chiều cao toàn màn hình */
+  background-color: #2c3e50; /* Màu nền tối */
+  color: white; /* Màu chữ */
+  padding: 20px; /* Khoảng cách bên trong */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Hiệu ứng bóng */
+  overflow-y: auto; /* Cuộn nếu nội dung vượt chiều cao */
+  position: fixed; /* Giữ sidebar cố định */
+  left: 0;
+  top: 0;
+}
+
+.sidebar h3 {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin-bottom: 15px;
+}
+
+.sidebar ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2em;
+}
+
+.sidebar ul li a:hover {
+  text-decoration: underline;
+}
+
+.content {
+  margin-left: 170px; /* Đẩy nội dung sang phải bằng chiều rộng sidebar + padding */
+  padding: 20px;
+  flex-grow: 1; /* Để content chiếm toàn bộ không gian còn lại */
+}
+
+.content h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}

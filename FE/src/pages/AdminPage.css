@@ -1,0 +1,23 @@
+/* AdminPage.css */
+.admin-dashboard {
+  padding: 20px;
+}
+
+.admin-links ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.admin-links li {
+  margin-bottom: 10px;
+}
+
+.admin-links a {
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+}
+
+.admin-links a:hover {
+  text-decoration: underline;
+}
