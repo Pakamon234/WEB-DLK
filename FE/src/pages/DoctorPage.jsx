@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import DoctorForm from '../components/DoctorForm';
 import DoctorList from '../components/DoctorList';
@@ -8,6 +8,7 @@ import Message from '../components/Message';
 import { fetchDoctorsFromAPI, addDoctor, editDoctor as editDoctorAPI, deleteDoctor } from '../services/doctorService';
 import AdminLayout from '../components/AdminLayout';  // Import AdminLayout
 import './DoctorPage.css';
+
 const DoctorPage = () => {
   const [doctors, setDoctors] = useState([]);
   const [filteredDoctors, setFilteredDoctors] = useState([]);
@@ -28,12 +29,13 @@ const DoctorPage = () => {
   const [isAddingDoctor, setIsAddingDoctor] = useState(false); // Trạng thái để thêm bác sĩ mới
   const [isEditingDoctor, setIsEditingDoctor] = useState(false); // Trạng thái để chỉnh sửa bác sĩ
   const [isLoading, setIsLoading] = useState(false);
-  
+
   useEffect(() => {
     fetchDoctors();
   }, []);
 
-  const fetchDoctors = async () => {
+  // Lấy danh sách bác sĩ từ API
+  const fetchDoctors = useCallback(async () => {
     setIsLoading(true);
     try {
       const response = await fetchDoctorsFromAPI();
@@ -44,12 +46,13 @@ const DoctorPage = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
+  // Hàm tìm kiếm bác sĩ
   const handleSearch = (e) => {
     const keyword = e.target.value.toLowerCase();
     setSearchTerm(keyword);
-    const filtered = doctors.filter((doctor) => 
+    const filtered = doctors.filter((doctor) =>
       doctor.ho.toLowerCase().includes(keyword) ||
       doctor.ten.toLowerCase().includes(keyword) ||
       doctor.username.toLowerCase().includes(keyword)
@@ -57,61 +60,71 @@ const DoctorPage = () => {
     setFilteredDoctors(filtered);
   };
 
+  // Hàm hiển thị form chỉnh sửa bác sĩ
   const handleEditClick = (doctor) => {
-    // Kiểm tra nếu form chỉnh sửa đang hiển thị, thì ẩn đi
     if (isEditingDoctor && doctorToEdit?.id === doctor.id) {
-      setIsEditingDoctor(false);  // Ẩn form nếu đã có form chỉnh sửa cho bác sĩ này
+      setIsEditingDoctor(false);
       setDoctorToEdit(null);
     } else {
-      setDoctorToEdit(doctor);  // Hiển thị form chỉnh sửa bác sĩ
+      setDoctorToEdit(doctor);
       setIsEditingDoctor(true);
-      setIsAddingDoctor(false); // Đảm bảo khi chỉnh sửa thì không hiển thị form thêm mới
+      setIsAddingDoctor(false);
     }
   };
 
+  // Hàm lưu chỉnh sửa bác sĩ
   const handleEditSave = async () => {
+    if (!doctorToEdit) {
+      setErrorMessage('Chưa chọn bác sĩ để sửa!');
+      return;
+    }
     try {
-      if (!doctorToEdit) {
-        setErrorMessage('Chưa chọn bác sĩ để sửa!');
-        return;
-      }
-      console.log("Saving doctor:", doctorToEdit);
       const response = await editDoctorAPI(doctorToEdit.id, doctorToEdit);
-      setSuccessMessage(response.data.msg); // Thông báo thành công khi lưu
+      setSuccessMessage(response.data.msg);
       setDoctorToEdit(null);
-      setIsEditingDoctor(false); // Ẩn form chỉnh sửa sau khi lưu
+      setIsEditingDoctor(false);
       fetchDoctors();
     } catch (error) {
       setErrorMessage('Lỗi khi lưu thay đổi!');
     }
   };
 
+  // Hàm xóa bác sĩ
   const handleDeleteDoctor = async (doctorId) => {
+    const confirmDelete = window.confirm("Bạn có chắc chắn muốn xóa bác sĩ này?");
+    if (!confirmDelete) return;
+    
     try {
-       const response =  await deleteDoctor(doctorId);
-       setSuccessMessage(response.data.msg); // Thông báo thành công khi xóa
+      const response = await deleteDoctor(doctorId);
+      setSuccessMessage(response.data.msg);
       fetchDoctors();
     } catch (error) {
       setErrorMessage('Lỗi khi xóa bác sĩ!');
     }
   };
 
+  // Hàm thay đổi dữ liệu bác sĩ mới
   const handleNewDoctorChange = (e) => {
     const { name, value } = e.target;
     setNewDoctor((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Hàm thay đổi dữ liệu bác sĩ đang sửa
   const handleEditChange = (e) => {
     const { name, value } = e.target;
     setDoctorToEdit((prevDoctor) => ({ ...prevDoctor, [name]: value }));
   };
 
+  // Hàm thêm bác sĩ mới
   const handleAddDoctor = async () => {
+    if (!newDoctor.username || !newDoctor.password || !newDoctor.ho || !newDoctor.ten) {
+      setErrorMessage('Vui lòng điền đầy đủ thông tin!');
+      return;
+    }
+
     try {
       const response = await addDoctor(newDoctor);
-
-      // Nhận thông báo thành công từ API
-      setSuccessMessage(response.data.msg); // Thông báo thành công khi thêm
+      setSuccessMessage(response.data.msg);
       setNewDoctor({
         hoc_ham: '',
         ho: '',
@@ -122,41 +135,40 @@ const DoctorPage = () => {
         password: '',
         username: '',
       });
-      setIsAddingDoctor(false); // Ẩn form sau khi thêm mới thành công
+      setIsAddingDoctor(false);
       fetchDoctors();
     } catch (error) {
       setErrorMessage('Lỗi khi thêm bác sĩ!');
     }
   };
 
+  // Hàm hủy thêm hoặc chỉnh sửa bác sĩ
   const handleCancelForm = () => {
-    setIsAddingDoctor(false);  // Ẩn form khi hủy thêm bác sĩ mới
-    setIsEditingDoctor(false);  // Ẩn form khi hủy chỉnh sửa bác sĩ
-    setDoctorToEdit(null);  // Đặt lại bác sĩ đang sửa
+    setIsAddingDoctor(false);
+    setIsEditingDoctor(false);
+    setDoctorToEdit(null);
   };
 
   return (
-<AdminLayout>
+    <AdminLayout>
       <h2 className="mb-4">Danh sách bác sĩ</h2>
 
-      {/* Hiển thị thông báo lỗi và thông báo thành công */}
       <div className="mb-3">
         <Message message={errorMessage} type="error" />
         <Message message={successMessage} type="success" />
       </div>
 
-      {/* Search bar và nút thêm bác sĩ */}
       <div className="row mb-4 align-items-center">
         <div className="col-md-8">
           <SearchBar value={searchTerm} onChange={handleSearch} className="form-control" />
         </div>
         <div className="col-md-4 text-end">
           {!isEditingDoctor && !isAddingDoctor && (
-            <button 
-              onClick={() => { 
-                setIsAddingDoctor(prev => !prev);  
-                setDoctorToEdit(null);  
-              }} 
+            <button
+              onClick={() => {
+                setIsAddingDoctor((prev) => !prev);
+                setDoctorToEdit(null);
+              }}
               className="btn btn-primary"
             >
               {isAddingDoctor ? 'Hủy thêm mới' : 'Thêm mới bác sĩ'}
@@ -170,21 +182,19 @@ const DoctorPage = () => {
         </div>
       </div>
 
-      {/* Danh sách bác sĩ */}
-      <DoctorList 
-        doctors={filteredDoctors} 
-        onEdit={handleEditClick}  
-        onDelete={handleDeleteDoctor} 
+      <DoctorList
+        doctors={filteredDoctors}
+        onEdit={handleEditClick}
+        onDelete={handleDeleteDoctor}
       />
 
-      {/* Hiển thị form */}
       {(isAddingDoctor || isEditingDoctor) && (
-        <DoctorForm 
+        <DoctorForm
           doctor={doctorToEdit || newDoctor}
           onChange={doctorToEdit ? handleEditChange : handleNewDoctorChange}
           onSave={doctorToEdit ? handleEditSave : handleAddDoctor}
           onCancel={handleCancelForm}
-          isAddingDoctor={isAddingDoctor}  
+          isAddingDoctor={isAddingDoctor}
         />
       )}
     </AdminLayout>

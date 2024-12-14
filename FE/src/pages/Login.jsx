@@ -12,12 +12,29 @@ const Login = () => {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
+    // Hàm validate form
+    const validateForm = () => {
+        if (!username || !password) {
+            setMessage("Tên đăng nhập và mật khẩu không được để trống!");
+            return false;
+        }
+        if (username.length < 3) {
+            setMessage("Tên đăng nhập phải có ít nhất 3 ký tự.");
+            return false;
+        }
+        if (password.length < 6) {
+            setMessage("Mật khẩu phải có ít nhất 6 ký tự.");
+            return false;
+        }
+        return true;
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
 
-        if (!username || !password) {
-            setMessage("Tên đăng nhập và mật khẩu không được để trống!");
+        // Validate dữ liệu nhập
+        if (!validateForm()) {
             setIsLoading(false);
             return;
         }
@@ -59,35 +76,35 @@ const Login = () => {
 
     return (
         <div className="login-wrapper">
-      <div className="login-container">
-      <h1>Đăng nhập</h1>
-    <form onSubmit={handleSubmit}>
-        <div className="form-group">
-            <label htmlFor="username">Tên đăng nhập</label>
-            <input
-                type="text"
-                id="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Nhập tên đăng nhập"
-            />
-        </div>
-        <div className="form-group">
-            <label htmlFor="password">Mật khẩu</label>
-            <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Nhập mật khẩu"
-            />
-        </div>
-        <button type="submit" disabled={isLoading}>
-            {isLoading ? "Đang xử lý..." : "Đăng nhập"}
-        </button>
-    </form>
-    {message && <p className="message">{message}</p>}
-        </div>
+            <div className="login-container">
+                <h1>Đăng nhập</h1>
+                <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <label htmlFor="username">Tên đăng nhập</label>
+                        <input
+                            type="text"
+                            id="username"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            placeholder="Nhập tên đăng nhập"
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="password">Mật khẩu</label>
+                        <input
+                            type="password"
+                            id="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="Nhập mật khẩu"
+                        />
+                    </div>
+                    <button type="submit" disabled={isLoading}>
+                        {isLoading ? "Đang xử lý..." : "Đăng nhập"}
+                    </button>
+                </form>
+                {message && <p className="message">{message}</p>}
+            </div>
         </div>
     );
 };

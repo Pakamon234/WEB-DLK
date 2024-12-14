@@ -52,7 +52,7 @@ const DoctorList = ({ doctors, onEdit, onDelete }) => {
             <th>Học hàm</th>
             <th>Họ</th>
             <th>Tên</th>
-            <th>Hình ảnh</th>
+            {/* <th>Hình ảnh</th> */}
             <th>Mô tả</th>
             <th>Ngày bắt đầu hành nghề</th>
             <th>Username</th>
@@ -66,7 +66,7 @@ const DoctorList = ({ doctors, onEdit, onDelete }) => {
               <td>{doctor.hoc_ham}</td>
               <td>{doctor.ho}</td>
               <td>{doctor.ten}</td>
-              <td>
+              {/* <td>
                 <img
                   src={doctor.hinh_anh}
                   alt={`Hình của ${doctor.ten}`}
@@ -74,7 +74,7 @@ const DoctorList = ({ doctors, onEdit, onDelete }) => {
                   width="50"
                   height="50"
                 />
-              </td>
+              </td> */}
               <td>{doctor.mo_ta}</td>
               <td>{doctor.ngay_bd_hanh_y}</td>
               <td>{doctor.username}</td>
