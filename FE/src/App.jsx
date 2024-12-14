@@ -7,6 +7,8 @@ import UserPage from './UserPage';  // Trang User
 import DoctorPage from './pages/DoctorPage';
 import PatientPage from './PatientPage';
 import HomePage from './pages/HomePage';
+import RegisterPage from './pages/RegisterPage';
+
 function App() {
 
   return (
@@ -18,6 +20,7 @@ function App() {
         <Route path="/user" element={<UserPage />} />  {/* Route cho User */}
         <Route path="/admin/doctors" element={<DoctorPage />} />
         <Route path="/admin/patients" element={<PatientPage />} />
+        <Route path="/register" element={<RegisterPage />} />
       </Routes>
     
   );

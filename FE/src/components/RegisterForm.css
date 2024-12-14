@@ -1,0 +1,60 @@
+/* src/components/RegisterForm.css */
+.register-form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.register-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #000000; /* Màu chữ xanh dương cho tiêu đề */
+}
+
+.register-form .form-group {
+    margin-bottom: 15px;
+}
+
+.register-form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #000000; /* Màu chữ xanh dương cho nhãn */
+}
+
+.register-form input {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.8); /* Làm nền input có độ trong suốt */
+    color: #007bff; /* Màu chữ xanh dương cho input */
+}
+
+.register-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white; /* Màu chữ trắng cho nút bấm */
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.register-form button:disabled {
+    background-color: #6c757d;
+}
+
+.register-form .message {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 16px;
+    color: #000000; /* Màu chữ xanh dương cho thông báo */
+}

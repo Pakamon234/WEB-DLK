@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode'; 
+const API_URL = ''; // Thay đổi URL nếu cần
 
 export const login = async (username, password) => {
     const response = await axios.post('http://127.0.0.1:7777/login', { username, password });
@@ -8,4 +9,14 @@ export const login = async (username, password) => {
 
 export const decodeToken = (token) => {
     return jwtDecode(token);
+};
+
+
+export const registerUser = async (userData) => {
+  try {
+    const response = await axios.post('http://127.0.0.1:7777/register', userData);
+    return response;
+  } catch (error) {
+    throw error;
+  }
 };

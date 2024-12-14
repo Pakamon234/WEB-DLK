@@ -1,0 +1,16 @@
+/* src/pages/RegisterPage.css */
+.register-page {
+    background-image: url('src/assets/images/image.png'); /* Thay đường dẫn ảnh của bạn */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;  /* Chiều cao trang */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .register-page h2 {
+    color: white;  /* Màu chữ sáng trên nền tối */
+  }
+  
