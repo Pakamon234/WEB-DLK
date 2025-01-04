@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { imageDb } from "../services/fireBase"; // Firebase config
 import DoctorForm from '../components/DoctorForm';
 import DoctorList from '../components/DoctorList';
 import SearchBar from '../components/SearchBar';
@@ -8,6 +10,7 @@ import Message from '../components/Message';
 import { fetchDoctorsFromAPI, addDoctor, editDoctor as editDoctorAPI, deleteDoctor } from '../services/doctorService';
 import AdminLayout from '../components/AdminLayout';  // Import AdminLayout
 import './DoctorPage.css';
+
 
 const DoctorPage = () => {
   const [doctors, setDoctors] = useState([]);
@@ -48,6 +51,36 @@ const DoctorPage = () => {
     }
   }, []);
 
+  const handleImageUpload = async (file, isEditing = false) => {
+    if (!file) return;
+  
+    const fileName = `${Date.now()}-${file.name}`;
+    const storageRef = ref(imageDb, `doctors/${fileName}`);
+  
+    try {
+      // Upload file lên Firebase Storage
+      const snapshot = await uploadBytes(storageRef, file);
+  
+      // Lấy URL của file sau khi upload
+      const downloadURL = await getDownloadURL(snapshot.ref);
+  
+      // Cập nhật URL hình ảnh vào dữ liệu bác sĩ
+      if (isEditing) {
+        setDoctorToEdit((prev) => ({ ...prev, hinh_anh: downloadURL }));
+      } else {
+        setNewDoctor((prev) => ({ ...prev, hinh_anh: downloadURL }));
+      }
+  
+      setSuccessMessage("Upload hình ảnh thành công!");
+    } catch (error) {
+      setErrorMessage("Lỗi khi upload hình ảnh!");
+    }
+  };
+  
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    handleImageUpload(file);
+  };
   // Hàm tìm kiếm bác sĩ
   const handleSearch = (e) => {
     const keyword = e.target.value.toLowerCase();
@@ -74,10 +107,11 @@ const DoctorPage = () => {
 
   // Hàm lưu chỉnh sửa bác sĩ
   const handleEditSave = async () => {
-    if (!doctorToEdit) {
-      setErrorMessage('Chưa chọn bác sĩ để sửa!');
+    if (!doctorToEdit.hinh_anh) {
+      setErrorMessage("Vui lòng upload hình ảnh trước khi lưu!");
       return;
     }
+  
     try {
       const response = await editDoctorAPI(doctorToEdit.id, doctorToEdit);
       setSuccessMessage(response.data.msg);
@@ -85,10 +119,10 @@ const DoctorPage = () => {
       setIsEditingDoctor(false);
       fetchDoctors();
     } catch (error) {
-      setErrorMessage('Lỗi khi lưu thay đổi!');
+      setErrorMessage("Lỗi khi lưu thay đổi!");
     }
   };
-
+  
   // Hàm xóa bác sĩ
   const handleDeleteDoctor = async (doctorId) => {
     const confirmDelete = window.confirm("Bạn có chắc chắn muốn xóa bác sĩ này?");
@@ -117,31 +151,31 @@ const DoctorPage = () => {
 
   // Hàm thêm bác sĩ mới
   const handleAddDoctor = async () => {
-    if (!newDoctor.username || !newDoctor.password || !newDoctor.ho || !newDoctor.ten) {
-      setErrorMessage('Vui lòng điền đầy đủ thông tin!');
+    if (!newDoctor.username || !newDoctor.password || !newDoctor.ho || !newDoctor.ten || !newDoctor.hinh_anh) {
+      setErrorMessage("Vui lòng điền đầy đủ thông tin và upload hình ảnh!");
       return;
     }
-
+  
     try {
       const response = await addDoctor(newDoctor);
       setSuccessMessage(response.data.msg);
       setNewDoctor({
-        hoc_ham: '',
-        ho: '',
-        ten: '',
-        hinh_anh: '',
-        mo_ta: '',
-        ngay_bd_hanh_y: '',
-        password: '',
-        username: '',
+        hoc_ham: "",
+        ho: "",
+        ten: "",
+        hinh_anh: "",
+        mo_ta: "",
+        ngay_bd_hanh_y: "",
+        password: "",
+        username: "",
       });
       setIsAddingDoctor(false);
       fetchDoctors();
     } catch (error) {
-      setErrorMessage('Lỗi khi thêm bác sĩ!');
+      setErrorMessage("Lỗi khi thêm bác sĩ!");
     }
   };
-
+  
   // Hàm hủy thêm hoặc chỉnh sửa bác sĩ
   const handleCancelForm = () => {
     setIsAddingDoctor(false);
@@ -194,6 +228,7 @@ const DoctorPage = () => {
           onChange={doctorToEdit ? handleEditChange : handleNewDoctorChange}
           onSave={doctorToEdit ? handleEditSave : handleAddDoctor}
           onCancel={handleCancelForm}
+          handleImageUpload={(file) => handleImageUpload(file, !!doctorToEdit)}
           isAddingDoctor={isAddingDoctor}
         />
       )}
