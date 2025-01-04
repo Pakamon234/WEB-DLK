@@ -1,7 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { imageDb } from "../services/fireBase"; // Firebase config
 import DoctorForm from '../components/DoctorForm';
 import DoctorList from '../components/DoctorList';
 import SearchBar from '../components/SearchBar';
@@ -151,7 +149,7 @@ const DoctorPage = () => {
 
   // Hàm thêm bác sĩ mới
   const handleAddDoctor = async () => {
-    if (!newDoctor.username || !newDoctor.password || !newDoctor.ho || !newDoctor.ten || !newDoctor.hinh_anh) {
+    if (!newDoctor.username || !newDoctor.password || !newDoctor.ho || !newDoctor.ten) {
       setErrorMessage("Vui lòng điền đầy đủ thông tin và upload hình ảnh!");
       return;
     }
