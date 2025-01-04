@@ -37,12 +37,11 @@ const DoctorForm = ({ doctor, onChange, onSave, onCancel, isAddingDoctor }) => {
           />
         </div>
         <div className="form-group">
-          <label>Hình ảnh (URL):</label>
+          <label>Hình ảnh:</label>
           <input
-            type="text"
-            name="hinh_anh"
-            value={doctor?.hinh_anh || ''}
-            onChange={onChange}
+            type="file"
+            accept="image/*"
+            onChange={(e) => handleImageUpload(e.target.files[0])}
             className="form-input"
           />
         </div>
