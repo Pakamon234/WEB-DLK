@@ -13,67 +13,107 @@ const RegisterForm = () => {
     ten: '',
     email: '',
     sdt: '',
+    cccd: '',
   });
 
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  
+  // Lưu thông tin lỗi từng trường
+  const [errors, setErrors] = useState({
+    username: '',
+    password: '',
+    ho: '',
+    ten: '',
+    email: '',
+    sdt: '',
+    cccd: '',
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    
+    // Xử lý validate khi người dùng nhập
+    validateField(name, value);
+  };
+
+  const validateField = (name, value) => {
+    let errorMessage = '';
+
+    switch (name) {
+      case 'username':
+        if (!value) {
+          errorMessage = "Tên đăng nhập không được để trống.";
+        }
+        break;
+      case 'password':
+        if (!value) {
+          errorMessage = "Mật khẩu không được để trống.";
+        }
+        break;
+      case 'ho':
+        const nameRegex = /^[A-Za-zÀ-ÿ]+$/;
+        if (!value) {
+          errorMessage = "Họ không được để trống.";
+        } else if (!nameRegex.test(value)) {
+          errorMessage = "Họ chỉ được phép chứa chữ.";
+        }
+        break;
+      case 'ten':
+        const nameRegexTen = /^[A-Za-zÀ-ÿ]+$/;
+        if (!value) {
+          errorMessage = "Tên không được để trống.";
+        } else if (!nameRegexTen.test(value)) {
+          errorMessage = "Tên chỉ được phép chứa chữ.";
+        }
+        break;
+      case 'email':
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        if (!value) {
+          errorMessage = "Email không được để trống.";
+        } else if (!emailRegex.test(value)) {
+          errorMessage = "Email không hợp lệ.";
+        }
+        break;
+      case 'sdt':
+        const phoneRegex = /^[0-9]{10}$/;
+        if (!value) {
+          errorMessage = "Số điện thoại không được để trống.";
+        } else if (!phoneRegex.test(value)) {
+          errorMessage = "Số điện thoại phải là 10 chữ số.";
+        }
+        break;
+      default:
+        break;
+    }
+
+    setErrors({ ...errors, [name]: errorMessage });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
-    const { username, password, ho, ten, email, sdt } = formData;
-
-    // Validate input fields
-    if (!username || !password || !ho || !ten || !sdt) {
-      setMessage("Cần nhập đầy đủ username, password, họ, tên và số điện thoại.");
-      setIsLoading(false);
-      return;
-    }
-
-    // Validate that 'ho' and 'ten' only contain letters (A-Z, a-z, including Vietnamese characters)
-    const nameRegex = /^[A-Za-zÀ-ÿ]+$/;
-    if (!nameRegex.test(ho)) {
-      setMessage("Họ chỉ được phép chứa chữ.");
-      setIsLoading(false);
-      return;
-    }
-
-    if (!nameRegex.test(ten)) {
-      setMessage("Tên chỉ được phép chứa chữ.");
-      setIsLoading(false);
-      return;
-    }
-
-    // Validate phone number 'sdt' contains only 10 digits
-    const phoneRegex = /^[0-9]{10}$/;
-    if (!phoneRegex.test(sdt)) {
-      setMessage("Số điện thoại phải là 10 chữ số.");
-      setIsLoading(false);
-      return;
-    }
+    // // Validate toàn bộ form trước khi gửi
+    // const { username, password, ho, ten, email, sdt } = formData;
+    // if (!username || !password || !ho || !ten || !sdt) {
+    //   setMessage("Cần nhập đầy đủ thông tin.");
+    //   setIsLoading(false);
+    //   return;
+    // }
 
     try {
       const response = await registerUser(formData);
       if (response.status === 201) {
-        // Khi đăng ký thành công, lấy thông báo từ API và hiển thị
         setMessage(response.data.msg || "Đăng ký thành công!");
-
-        // Chuyển hướng về trang login
         setTimeout(() => {
-          navigate('/login');  // Chuyển hướng về trang login
-        }, 1000);  // Chờ 1 giây để người dùng đọc thông báo thành công
+          navigate('/login');
+        }, 2000);
       } else {
-        // Nếu có lỗi, hiển thị thông báo lỗi từ API
         setMessage(response.data.msg || "Lỗi không xác định!");
       }
     } catch (error) {
-      // Hiển thị thông báo lỗi nếu có exception xảy ra
       setMessage(error.response?.data?.msg || "Lỗi không xác định!");
     } finally {
       setIsLoading(false);
@@ -94,6 +134,7 @@ const RegisterForm = () => {
             onChange={handleChange}
             placeholder="Nhập tên đăng nhập"
           />
+          {errors.username && <p className="error-message">{errors.username}</p>}
         </div>
 
         <div className="form-group">
@@ -106,6 +147,7 @@ const RegisterForm = () => {
             onChange={handleChange}
             placeholder="Nhập mật khẩu"
           />
+          {errors.password && <p className="error-message">{errors.password}</p>}
         </div>
 
         <div className="form-group">
@@ -118,6 +160,7 @@ const RegisterForm = () => {
             onChange={handleChange}
             placeholder="Nhập họ"
           />
+          {errors.ho && <p className="error-message">{errors.ho}</p>}
         </div>
 
         <div className="form-group">
@@ -130,6 +173,7 @@ const RegisterForm = () => {
             onChange={handleChange}
             placeholder="Nhập tên"
           />
+          {errors.ten && <p className="error-message">{errors.ten}</p>}
         </div>
 
         <div className="form-group">
@@ -142,6 +186,7 @@ const RegisterForm = () => {
             onChange={handleChange}
             placeholder="Nhập email"
           />
+          {errors.email && <p className="error-message">{errors.email}</p>}
         </div>
 
         <div className="form-group">
@@ -153,6 +198,18 @@ const RegisterForm = () => {
             value={formData.sdt}
             onChange={handleChange}
             placeholder="Nhập số điện thoại"
+          />
+          {errors.sdt && <p className="error-message">{errors.sdt}</p>}
+        </div>
+        <div className="form-group">
+          <label htmlFor="cccd">CCCD</label>
+          <input
+            type="text"
+            id="cccd"
+            name="cccd"
+            value={formData.cccd}
+            onChange={handleChange}
+            placeholder="Nhập CCCD"
           />
         </div>
 

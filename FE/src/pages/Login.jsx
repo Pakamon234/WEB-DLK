@@ -14,10 +14,10 @@ const Login = () => {
 
     // Hàm validate form
     const validateForm = () => {
-        if (!username || !password) {
-            setMessage("Tên đăng nhập và mật khẩu không được để trống!");
-            return false;
-        }
+        // if (!username || !password) {
+        //     setMessage("Tên đăng nhập và mật khẩu không được để trống!");
+        //     return false;
+        // }
         if (username.length < 3) {
             setMessage("Tên đăng nhập phải có ít nhất 3 ký tự.");
             return false;
