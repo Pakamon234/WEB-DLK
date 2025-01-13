@@ -5,10 +5,11 @@ import Login from './pages/Login'; // Trang Login
 import AdminPage from './pages/AdminPage';
 import UserPage from './UserPage';  // Trang User
 import DoctorPage from './pages/DoctorPage';
-import PatientPage from './components/PatientList';
+import PatientPage from './pages/PatientPage'; // Đường dẫn đến file PatientPage
 import HomePage from './pages/HomePage';
 import RegisterPage from './pages/RegisterPage';
-import UserList from './components/UserList';
+import 'bootstrap/dist/css/bootstrap.min.css';
+//import UserList from './components/UserList';
 
 function App() {
 
@@ -22,7 +23,7 @@ function App() {
         <Route path="/admin/doctors" element={<DoctorPage />} />
         <Route path="/admin/patients" element={<PatientPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/userlist" element={<UserList />} />
+        {/* <Route path="/userlist" element={<UserList />} /> */}
       </Routes>
     
   );

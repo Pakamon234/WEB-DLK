@@ -65,7 +65,7 @@ const Login = () => {
             // Điều hướng người dùng theo vai trò
             const { role } = decodedToken.sub;
             alert("Đăng nhập thành công!");
-            navigate(role === "1" ? "/admin" : "/user");
+            navigate(role === "admin" ? "/admin" : "/user");
         } catch (error) {
             // Hiển thị thông báo lỗi chi tiết
             setMessage(error.response?.data?.msg || "Đã xảy ra lỗi không xác định!");

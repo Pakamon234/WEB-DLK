@@ -1,0 +1,9 @@
+.modal-footer .btn {
+    display: inline-block !important; /* Đảm bảo các nút là inline-block */
+    width: auto !important;          /* Đặt chiều rộng tự động */
+  }
+  
+  .modal-footer .d-flex {
+    gap: 10px;                       /* Khoảng cách giữa các nút */
+  }
+  
