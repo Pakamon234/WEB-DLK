@@ -4,7 +4,7 @@ import axios from './axiosInstance'; // Đảm bảo axiosInstance đã được
 export const getAllUsers = async () => {
   try {
     const response = await axios.get('/getAllUsers');
-    return response.data; // Trả về dữ liệu người dùng
+    return response.data; // Trả về danh sách người dùng
   } catch (error) {
     handleApiError(error);
   }
@@ -35,6 +35,16 @@ export const deleteUser = async (userId) => {
   try {
     const response = await axios.delete(`/deleteUser/${userId}`);
     return response.data; // Trả về phản hồi thành công
+  } catch (error) {
+    handleApiError(error);
+  }
+};
+
+// Lấy thông tin chi tiết của người dùng
+export const getUserDetails = async (userId) => {
+  try {
+    const response = await axios.get(`/myINFO/${userId}`);
+    return response.data; // Trả về thông tin chi tiết của người dùng
   } catch (error) {
     handleApiError(error);
   }

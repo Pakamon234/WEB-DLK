@@ -11,6 +11,7 @@ const AdminLayout = ({ children }) => {
         <ul>
           <li><Link to="/admin/doctors">Bác sĩ</Link></li>
           <li><Link to="/admin/patients">Bệnh nhân</Link></li>
+          <li><Link to="/admin/appointments">Lịch hẹn</Link></li>
         </ul>
       </aside>
       <main className="content">
