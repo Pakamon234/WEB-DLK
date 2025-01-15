@@ -1,18 +1,20 @@
+/* Admin Page Layout */
 .admin-page {
   display: flex;
   height: 100vh;
   font-family: Arial, sans-serif;
 }
 
+/* Sidebar Styles */
 .sidebar {
-  width: 150px; /* Chiều rộng sidebar */
+  width: 200px; /* Độ rộng sidebar */
   height: 100vh; /* Chiều cao toàn màn hình */
-  background-color: #2c3e50; /* Màu nền tối */
+  background-color: #2c3e50; /* Màu nền */
   color: white; /* Màu chữ */
   padding: 20px; /* Khoảng cách bên trong */
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Hiệu ứng bóng */
-  overflow-y: auto; /* Cuộn nếu nội dung vượt chiều cao */
-  position: fixed; /* Giữ sidebar cố định */
+  overflow-y: auto; /* Cuộn nếu nội dung quá dài */
+  position: fixed; /* Sidebar cố định */
   left: 0;
   top: 0;
 }
@@ -20,8 +22,10 @@
 .sidebar h3 {
   font-size: 1.5em;
   margin-bottom: 20px;
+  font-weight: bold;
 }
 
+/* Sidebar List Styles */
 .sidebar ul {
   list-style: none;
   padding: 0;
@@ -29,22 +33,80 @@
 
 .sidebar ul li {
   margin-bottom: 15px;
+  position: relative; /* Để hỗ trợ dropdown */
 }
 
-.sidebar ul li a {
+.sidebar ul li a,
+.sidebar ul li .dropdown-header {
   color: white;
   text-decoration: none;
   font-size: 1.2em;
+  display: flex;
+  justify-content: space-between; /* Căn đều giữa text và icon */
+  align-items: center;
+  padding: 10px 15px;
+  border-radius: 5px; /* Viền bo tròn */
+  transition: background-color 0.3s ease;
 }
 
-.sidebar ul li a:hover {
+.sidebar ul li a:hover,
+.sidebar ul li .dropdown-header:hover {
+  background-color: #34495e; /* Màu nền khi hover */
   text-decoration: underline;
 }
 
+/* Dropdown Arrow Styles */
+.dropdown-arrow {
+  margin-left: 10px;
+  font-size: 0.8em;
+  transition: transform 0.3s ease;
+}
+
+.dropdown-arrow.open {
+  transform: rotate(180deg); /* Xoay mũi tên khi mở dropdown */
+}
+
+/* Dropdown List Styles */
+.dropdown-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: #34495e; /* Màu nền dropdown */
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Hiệu ứng bóng */
+  position: absolute;
+  top: 100%; /* Đẩy xuống dưới dropdown-header */
+  left: 0;
+  width: 100%; /* Chiều rộng dropdown bằng với parent */
+  z-index: 1000;
+  display: none; /* Ẩn mặc định */
+}
+
+.dropdown-list.open {
+  display: block; /* Hiển thị dropdown khi mở */
+}
+
+.dropdown-list li {
+  padding: 5px 5px; /* Điều chỉnh khoảng cách trên dưới và hai bên */
+}
+
+.dropdown-list li a {
+  color: white;
+  text-decoration: none;
+  font-size: 0.4em; /* Kích thước chữ nhỏ hơn */
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-list li a:hover {
+  background-color: #3b5998; /* Màu nền khi hover */
+}
+
+
+/* Main Content Styles */
 .content {
-  margin-left: 170px; /* Đẩy nội dung sang phải bằng chiều rộng sidebar + padding */
+  margin-left: 220px; /* Đẩy nội dung sang phải bằng chiều rộng sidebar */
   padding: 20px;
-  flex-grow: 1; /* Để content chiếm toàn bộ không gian còn lại */
+  flex-grow: 1; /* Chiếm hết phần không gian còn lại */
 }
 
 .content h2 {

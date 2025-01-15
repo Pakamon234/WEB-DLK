@@ -1,0 +1,98 @@
+/* Tổng quan bảng */
+#department-table {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  /* Định dạng ô */
+  #department-table td, #department-table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center; /* Căn giữa nội dung */
+    vertical-align: middle; /* Căn giữa theo chiều dọc */
+  }
+  
+  /* Hàng chẵn có màu nền nhạt */
+  #department-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  /* Hiệu ứng hover */
+  #department-table tr:hover {
+    background-color: #ddd;
+  }
+  
+  /* Tiêu đề bảng */
+  #department-table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: #04AA6D; /* Màu xanh tiêu đề */
+    color: white;
+    text-align: center;
+  }
+  
+  /* Nút hành động */
+  .action-btn {
+    padding: 5px 10px;
+    margin: 0 5px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  /* Nút Sửa */
+  .edit-btn {
+    background-color: #ffc107; /* Vàng */
+    color: #fff;
+    border-color: #ffc107;
+  }
+  
+  .edit-btn:hover {
+    background-color: #e0a800;
+    border-color: #d39e00;
+  }
+  
+  /* Nút Xóa */
+  .delete-btn {
+    background-color: #dc3545; /* Đỏ */
+    color: #fff;
+    border-color: #dc3545;
+  }
+  
+  .delete-btn:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+  }
+  
+  /* Phân trang */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .page-item {
+    margin: 0 2px;
+  }
+  
+  .page-item .page-link {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    color: #333;
+  }
+  
+  .page-item.active .page-link {
+    background-color: #04AA6D;
+    color: white;
+    border-color: #04AA6D;
+  }
+  
+  .page-item.disabled .page-link {
+    background-color: #e9ecef;
+    color: #6c757d;
+    pointer-events: none;
+  }
+  

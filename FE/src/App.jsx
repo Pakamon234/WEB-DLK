@@ -9,6 +9,8 @@ import PatientPage from './pages/PatientPage'; // Đường dẫn đến file Pa
 import HomePage from './pages/HomePage';
 import RegisterPage from './pages/RegisterPage';
 import AppointmentPage from './pages/AppointmentPage';
+import DepartmentPage from './pages/DepartmentPage';
+import CTKhoaPage from './pages/CTKhoaPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 //import UserList from './components/UserList';
 
@@ -25,6 +27,8 @@ function App() {
         <Route path="/admin/patients" element={<PatientPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/admin/appointments" element={<AppointmentPage />} />
+        <Route path="/admin/department" element={<DepartmentPage />} />
+        <Route path="/admin/ct-khoa" element={<CTKhoaPage />} />
         {/* <Route path="/userlist" element={<UserList />} /> */}
       </Routes>
     
