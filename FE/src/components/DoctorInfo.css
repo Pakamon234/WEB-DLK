@@ -1,0 +1,118 @@
+.container {
+    max-width: 1200px;
+  }
+  
+  .card {
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-body img {
+    border: 2px solid #ddd;
+    width: 150px; /* Đặt chiều rộng cố định */
+    height: 150px; /* Đặt chiều cao cố định */
+    object-fit: cover; /* Đảm bảo hình ảnh không bị méo */
+    border-radius: 50%; /* Nếu muốn ảnh bo tròn */
+  }
+  
+  .card-body h4 {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .card ul {
+    padding-left: 0;
+    list-style: none;
+  }
+  
+  .list-group-item i {
+    font-size: 1.2rem;
+    color: #555;
+  }
+  .card {
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card .card-title {
+    font-size: 16px;
+    color: #007bff;
+    font-weight: bold;
+  }
+  
+  .card .card-text {
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .card-body {
+    padding: 20px;
+  }
+  
+  .row {
+    margin-top: 15px;
+  }
+  .card {
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-body {
+    padding: 20px;
+  }
+  
+  .card-body p {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 10px;
+  }
+  
+  .card .btn {
+    font-size: 14px;
+    padding: 5px 10px;
+  }
+  
+  .card .btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+  }
+  
+  .card .btn-outline-secondary {
+    color: #6c757d;
+    border-color: #6c757d;
+  }
+  .card {
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card .btn {
+    font-size: 14px;
+    padding: 5px 10px;
+  }
+  
+  .card .btn-warning {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: #fff;
+  }
+  
+  .card .btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: #fff;
+  }
+  
+  .card .btn-primary {
+    font-size: 16px;
+  }
+  
+  .d-flex {
+    display: flex;
+    align-items: center;
+  }
+  
+  .d-flex .me-2 {
+    margin-right: 0.5rem;
+  }
+  

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Dùng để chuyển hướng
 import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap CSS
 import './DoctorList.css'; // Nếu có CSS riêng
 
@@ -6,6 +7,7 @@ const DoctorList = ({ doctors, onEdit, onDelete }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5; // Số bác sĩ trên mỗi trang
   const totalPages = Math.ceil(doctors.length / itemsPerPage);
+  const navigate = useNavigate(); // Hook để điều hướng
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -20,12 +22,10 @@ const DoctorList = ({ doctors, onEdit, onDelete }) => {
     const maxPageNumbers = 5; // Số trang hiển thị tối đa
 
     if (totalPages <= maxPageNumbers) {
-      // Hiển thị tất cả các trang nếu số trang ít hơn maxPageNumbers
       for (let i = 1; i <= totalPages; i++) {
         pageNumbers.push(i);
       }
     } else {
-      // Hiển thị phân trang với dấu "..."
       let startPage = Math.max(1, currentPage - 2);
       let endPage = Math.min(totalPages, currentPage + 2);
 
@@ -52,7 +52,6 @@ const DoctorList = ({ doctors, onEdit, onDelete }) => {
             <th>Học hàm</th>
             <th>Họ</th>
             <th>Tên</th>
-            {/* <th>Hình ảnh</th> */}
             <th>Mô tả</th>
             <th>Ngày bắt đầu hành nghề</th>
             <th>Username</th>
@@ -66,15 +65,6 @@ const DoctorList = ({ doctors, onEdit, onDelete }) => {
               <td>{doctor.hoc_ham}</td>
               <td>{doctor.ho}</td>
               <td>{doctor.ten}</td>
-              {/* <td>
-                <img
-                  src={doctor.hinh_anh}
-                  alt={`Hình của ${doctor.ten}`}
-                  className="doctor-image"
-                  width="50"
-                  height="50"
-                />
-              </td> */}
               <td>{doctor.mo_ta}</td>
               <td>{doctor.ngay_bd_hanh_y}</td>
               <td>{doctor.username}</td>
@@ -87,9 +77,15 @@ const DoctorList = ({ doctors, onEdit, onDelete }) => {
                 </button>
                 <button
                   onClick={() => onDelete(doctor.id)}
-                  className="btn btn-danger btn-sm"
+                  className="btn btn-danger btn-sm me-2"
                 >
                   Xóa
+                </button>
+                <button
+                  onClick={() => navigate(`/admin/doctors/${doctor.id}`)}
+                  className="btn btn-info btn-sm"
+                >
+                  Thông tin
                 </button>
               </td>
             </tr>

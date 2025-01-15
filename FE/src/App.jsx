@@ -12,6 +12,7 @@ import AppointmentPage from './pages/AppointmentPage';
 import DepartmentPage from './pages/DepartmentPage';
 import CTKhoaPage from './pages/CTKhoaPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import DoctorDetailPage from './pages/DoctorDetailPage';
 //import UserList from './components/UserList';
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         <Route path="/admin/appointments" element={<AppointmentPage />} />
         <Route path="/admin/department" element={<DepartmentPage />} />
         <Route path="/admin/ct-khoa" element={<CTKhoaPage />} />
+        <Route path="/admin/doctors/:id" element={<DoctorDetailPage />} />
         {/* <Route path="/userlist" element={<UserList />} /> */}
       </Routes>
     
