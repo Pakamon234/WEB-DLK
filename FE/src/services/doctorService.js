@@ -18,3 +18,4 @@ export const editDoctor = async (id, doctor) => {
 export const deleteDoctor = async (id) => {
   return axios.delete(`http://127.0.0.1:7777/deleteDoctor/${id}`, { headers });
 };
+
