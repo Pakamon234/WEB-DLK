@@ -9,18 +9,18 @@ const DoctorDetailPage = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchDoctor = async () => {
-      try {
-        const data = await getDoctorById(id);
-        setDoctor(data);
-      } catch (error) {
-        setErrorMessage(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchDoctor = async () => {
+    try {
+      const data = await getDoctorById(id);
+      setDoctor(data);
+    } catch (error) {
+      setErrorMessage(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchDoctor();
   }, [id]);
 
@@ -34,7 +34,7 @@ const DoctorDetailPage = () => {
 
   return (
     <div>
-      <DoctorInfo doctor={doctor} />
+      <DoctorInfo doctor={doctor} fetchDoctor={fetchDoctor} />
     </div>
   );
 };

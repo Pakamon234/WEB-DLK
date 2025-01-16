@@ -201,7 +201,7 @@ const RegisterForm = () => {
           />
           {errors.sdt && <p className="error-message">{errors.sdt}</p>}
         </div>
-        <div className="form-group">
+        {/* <div className="form-group">
           <label htmlFor="cccd">CCCD</label>
           <input
             type="text"
@@ -211,7 +211,7 @@ const RegisterForm = () => {
             onChange={handleChange}
             placeholder="Nhập CCCD"
           />
-        </div>
+        </div> */}
 
         <button type="submit" disabled={isLoading}>
           {isLoading ? "Đang xử lý..." : "Đăng ký"}
