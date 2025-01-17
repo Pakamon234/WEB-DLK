@@ -16,6 +16,7 @@ import DoctorDetailPage from './pages/DoctorDetailPage';
 import PrivateRoute from "./components/PrivateRoute"; // Import PrivateRoute
 //import UserList from './components/UserList';
 import DoctorHomePage from './pages/DoctorHomePage'; // Import trang DoctorPage
+import AppointmentPageVP from './pages/AppointmentPageVP';
 
 function App() {
 
@@ -84,6 +85,8 @@ function App() {
         />
 
 <Route path="/doctor" element={<DoctorHomePage />} /> {/* Route cho Doctor */}
+
+<Route path="/doctor/appointments" element={<AppointmentPageVP />} />
         {/* <Route path="/userlist" element={<UserList />} /> */}
       </Routes>
 
