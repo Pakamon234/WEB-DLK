@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://127.0.0.1:7777',  // Thay đổi baseURL nếu API của bạn không phải ở root
+  baseURL: 'http://10.252.1.239:7777/',  // Thay đổi baseURL nếu API của bạn không phải ở root
 });
 
 // Thêm interceptor để tự động thêm token vào header
