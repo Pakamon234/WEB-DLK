@@ -130,18 +130,22 @@ const AppointmentListByVP = ({ appointments, fetchAppointments }) => {
               <td>{appointment.gio_hen || "N/A"}</td>
               <td>{getStatusText(appointment.trang_thai)}</td>
               <td>
-                <button
-                  className="btn btn-success btn-sm me-2"
-                  onClick={() => handleStatusUpdate(appointment.id, "1")}
-                >
-                  Thành công
-                </button>
-                <button
-                  className="btn btn-danger btn-sm"
-                  onClick={() => handleStatusUpdate(appointment.id, "2")}
-                >
-                  Hủy
-                </button>
+                {appointment.trang_thai !== "1" && (
+                  <button
+                    className="btn btn-success btn-sm me-2"
+                    onClick={() => handleStatusUpdate(appointment.id, "1")}
+                  >
+                    Thành công
+                  </button>
+                )}
+                {appointment.trang_thai !== "2" && (
+                  <button
+                    className="btn btn-danger btn-sm"
+                    onClick={() => handleStatusUpdate(appointment.id, "2")}
+                  >
+                    Hủy
+                  </button>
+                )}
               </td>
               <td>{appointment.ngay_gio_dat || "N/A"}</td>
               <td>
@@ -153,7 +157,7 @@ const AppointmentListByVP = ({ appointments, fetchAppointments }) => {
                   onEnter={() => fetchOfficeDetails(appointment.vanphong_id)}
                 >
                   <span style={{ textDecoration: "underline", cursor: "pointer" }}>
-                    {appointment.vanphong_id}
+                    {appointment.dia_chi}
                   </span>
                 </OverlayTrigger>
               </td>
