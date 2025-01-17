@@ -1,22 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 const HomePage = () => {
-  const [htmlContent, setHtmlContent] = useState("");
-
   useEffect(() => {
-    // Fetch nội dung từ tệp HTML
-    fetch("/index.html")
-      .then((response) => response.text())
-      .then((data) => setHtmlContent(data))
-      .catch((error) => console.error("Error loading HTML:", error));
+    // Chuyển hướng sang tệp index.html
+    window.location.href = "/index.html";
   }, []);
 
-  return (
-    <div>
-      {/* Render nội dung HTML */}
-      <div dangerouslySetInnerHTML={{ __html: htmlContent }}></div>
-    </div>
-  );
+  return null; // Không cần render nội dung gì vì đã chuyển hướng
 };
 
 export default HomePage;

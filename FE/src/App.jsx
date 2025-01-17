@@ -13,7 +13,9 @@ import DepartmentPage from './pages/DepartmentPage';
 import CTKhoaPage from './pages/CTKhoaPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DoctorDetailPage from './pages/DoctorDetailPage';
+import PrivateRoute from "./components/PrivateRoute"; // Import PrivateRoute
 //import UserList from './components/UserList';
+import DoctorHomePage from './pages/DoctorHomePage'; // Import trang DoctorPage
 
 function App() {
 
@@ -21,18 +23,71 @@ function App() {
     
       <Routes>
         <Route path="/login" element={<Login />} />  {/* Route cho Login */}
-        <Route path="/" element={<HomePage />} />  {/* Route cho Login */}
-        <Route path="/admin" element={<AdminPage />} />  {/* Route cho Admin */}
-        <Route path="/user" element={<UserPage />} />  {/* Route cho User */}
-        <Route path="/admin/doctors" element={<DoctorPage />} />
-        <Route path="/admin/patients" element={<PatientPage />} />
+        <Route path="/" element={<HomePage />} />  {/* Route cho Login */}     
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/admin/appointments" element={<AppointmentPage />} />
-        <Route path="/admin/department" element={<DepartmentPage />} />
-        <Route path="/admin/ct-khoa" element={<CTKhoaPage />} />
-        <Route path="/admin/doctors/:id" element={<DoctorDetailPage />} />
+        <Route
+          path="/admin"
+          element={
+            <PrivateRoute roleRequired="admin">
+              <AdminPage />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/admin/doctors"
+          element={
+            <PrivateRoute roleRequired="admin">
+              <DoctorPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/admin/patients"
+          element={
+            <PrivateRoute roleRequired="admin">
+              <PatientPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/admin/appointments"
+          element={
+            <PrivateRoute roleRequired="admin">
+              <AppointmentPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/admin/department"
+          element={
+            <PrivateRoute roleRequired="admin">
+              <DepartmentPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/admin/ct-khoa"
+          element={
+            <PrivateRoute roleRequired="admin">
+              <CTKhoaPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/admin/doctors/:id"
+          element={
+            <PrivateRoute roleRequired="admin">
+              <DoctorDetailPage />
+            </PrivateRoute>
+          }
+        />
+
+<Route path="/doctor" element={<DoctorHomePage />} /> {/* Route cho Doctor */}
         {/* <Route path="/userlist" element={<UserList />} /> */}
       </Routes>
+
+
     
   );
 }

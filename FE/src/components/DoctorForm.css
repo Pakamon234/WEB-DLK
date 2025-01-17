@@ -81,4 +81,15 @@
   .cancel-btn:hover {
     background-color: #e53935;
   }
+  /* DoctorForm.css */
+.image-preview {
+  max-width: 150px; /* Giới hạn chiều rộng */
+  max-height: 150px; /* Giới hạn chiều cao */
+  width: auto; /* Tự động điều chỉnh theo tỉ lệ */
+  height: auto; /* Tự động điều chỉnh theo tỉ lệ */
+  border: 1px solid #ddd; /* Viền ảnh */
+  border-radius: 8px; /* Bo góc */
+  margin-top: 10px; /* Khoảng cách trên */
+}
+
   

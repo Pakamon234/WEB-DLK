@@ -4,6 +4,7 @@ import VanPhongModal from "./VanPhongModal"; // Import modal
 import HospitalModal from "./HospitalModal"; // Import modal
 import CertificateModal from "./CertificateModal"; // Import modal
 import ScheduleModal from "./ScheduleModal"; // Import modal
+import DoctorFormModal from "./DoctorFormModal"; // Import modal
 import {
   addVanPhong,
   updateVanPhong,
@@ -24,6 +25,12 @@ import {
   updateSchedule,
   deleteSchedule,
 } from "../services/scheduleService"; // Import service
+import {
+  fetchDoctorsFromAPI,
+  addDoctor,
+  editDoctor as editDoctorAPI,
+  deleteDoctor,
+} from "../services/doctorService";
 
 const DoctorInfo = ({ doctor, fetchDoctor }) => {
   const [activeTab, setActiveTab] = useState("personal"); // Tab mặc định là Thông tin cá nhân
@@ -210,7 +217,40 @@ const DoctorInfo = ({ doctor, fetchDoctor }) => {
       }
     }
   };
+  const [isEditingDoctor, setIsEditingDoctor] = useState(false);
+  const [editingDoctor, setEditingDoctor] = useState(null); // Track the doctor being edited
 
+  // Open modal for editing doctor
+  const handleEditDoctor = () => {
+    setEditingDoctor(doctor); // Set the current doctor for editing
+    setIsEditingDoctor(true); // Show the modal
+  };
+
+  // Close the modal
+  const handleCloseModalD = () => {
+    setEditingDoctor(null); // Reset the editing doctor state
+    setIsEditingDoctor(false); // Hide the modal
+  };
+
+  // Handle saving changes
+  const handleSaveDoctor = async () => {
+    try {
+      // Make your API call to update the doctor here
+      console.log("Saving doctor details:", editingDoctor);
+      // Assume a function updateDoctor exists
+      await editDoctorAPI(editingDoctor.id, editingDoctor);
+      fetchDoctor(); // Refresh the doctor details
+      handleCloseModalD(); // Close the modal
+    } catch (error) {
+      console.error("Error saving doctor details:", error.message);
+    }
+  };
+
+  // Handle changes to the doctor's data
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEditingDoctor((prev) => ({ ...prev, [name]: value }));
+  };
 
   return (
     <div className="container mt-5">
@@ -224,8 +264,7 @@ const DoctorInfo = ({ doctor, fetchDoctor }) => {
                 alt="Doctor"
                 className="rounded-circle mb-3"
               />
-              <h4>{`${doctor.ho} ${doctor.ten}`}</h4>
-              <p className="text-muted">{doctor.hoc_ham}</p>
+              <h4>{`${doctor.hoc_ham} ${doctor.ho} ${doctor.ten}`}</h4>
               <p>ID: {doctor.id}</p>
               <button className="btn btn-outline-primary">Nhắn tin</button>
             </div>
@@ -296,7 +335,9 @@ const DoctorInfo = ({ doctor, fetchDoctor }) => {
                       </div>
                     </div>
                     <div className="text-end">
-                      <button className="btn btn-success me-2">Chỉnh sửa</button>
+                      <button className="btn btn-success me-2" onClick={handleEditDoctor}>
+                        Chỉnh sửa
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -462,10 +503,6 @@ const DoctorInfo = ({ doctor, fetchDoctor }) => {
                 />
               </div>
             )}
-
-
-
-
             {activeTab === "schedule" && (
               <div>
                 <div className="d-flex justify-content-between align-items-center mb-3">
@@ -523,8 +560,18 @@ const DoctorInfo = ({ doctor, fetchDoctor }) => {
                   initialData={editingSchedule}
                 />
               </div>
-            )}
 
+            )}
+            {isEditingDoctor && (
+              <DoctorFormModal
+                show={isEditingDoctor}
+                onHide={handleCloseModalD}
+                doctor={editingDoctor}
+                onChange={handleChange}
+                onSave={handleSaveDoctor}
+                isAddingDoctor={false}
+              />
+            )}
           </div>
         </div>
       </div>

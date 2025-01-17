@@ -31,7 +31,6 @@ const HospitalModal = ({ show, onHide, onSave, initialData }) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
   const handleSave = () => {
     onSave(formData);
   };

@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './AdminLayout.css';
 
 const AdminLayout = ({ children }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const navigate = useNavigate(); // Dùng để điều hướng
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token'); // Xóa token hoặc thông tin xác thực
+    navigate('/'); // Điều hướng về trang chủ
   };
 
   return (
@@ -28,6 +34,9 @@ const AdminLayout = ({ children }) => {
             </ul>
           </li>
         </ul>
+        <div className="logout-container">
+          <button className="logout-button" onClick={handleLogout}>Đăng xuất</button>
+        </div>
       </aside>
       <main className="content">
         {children}

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'; // Import useState và useEffect
+import React, { useState, useEffect } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Import CSS Bootstrap
 
 const Message = ({ message, type, resetMessage }) => {
   const [isVisible, setIsVisible] = useState(true);
@@ -8,7 +9,9 @@ const Message = ({ message, type, resetMessage }) => {
       setIsVisible(true); // Hiển thị thông báo mới
       const timer = setTimeout(() => {
         setIsVisible(false); // Ẩn thông báo sau 3 giây
-        //resetMessage(); // Reset message khi thông báo ẩn đi
+        if (resetMessage) {
+          resetMessage(); // Reset message khi thông báo ẩn đi
+        }
       }, 3000);
 
       return () => clearTimeout(timer); // Dọn dẹp timer khi component bị unmount hoặc thông báo thay đổi
@@ -17,9 +20,24 @@ const Message = ({ message, type, resetMessage }) => {
 
   if (!message || !isVisible) return null; // Nếu không có message hoặc thông báo đã ẩn, không render
 
-  const messageStyle = type === 'error' ? { color: 'red' } : { color: 'green' };
+  const alertType = type === 'error' ? 'alert-danger' : 'alert-success'; // Loại alert (danger hoặc success)
 
-  return <div style={messageStyle}>{message}</div>;
+  return (
+    <div className={`alert ${alertType} alert-dismissible fade show`} role="alert">
+      {message}
+      <button
+        type="button"
+        className="btn-close"
+        aria-label="Close"
+        onClick={() => {
+          setIsVisible(false);
+          if (resetMessage) {
+            resetMessage(); // Reset message khi người dùng đóng alert
+          }
+        }}
+      ></button>
+    </div>
+  );
 };
 
 export default Message;

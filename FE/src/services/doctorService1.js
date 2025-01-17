@@ -9,3 +9,7 @@ export const getDoctorById = async (id) => {
     throw new Error(error.response?.data?.msg || 'Không thể lấy thông tin bác sĩ.');
   }
 };
+export const loginDoctor = async (username, password) => {
+  const response = await axios.post('/doctor', { username, password });
+  return response.data;
+};
