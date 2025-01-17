@@ -5,6 +5,8 @@ import HospitalModal from "./HospitalModal"; // Import modal
 import CertificateModal from "./CertificateModal"; // Import modal
 import ScheduleModal from "./ScheduleModal"; // Import modal
 import DoctorFormModal from "./DoctorFormModal"; // Import modal
+import ImageEditModal from "./ImageEditModal";
+import { updateDoctorImage } from "../services/doctorService1";
 import {
   addVanPhong,
   updateVanPhong,
@@ -251,6 +253,26 @@ const DoctorInfo = ({ doctor, fetchDoctor }) => {
     const { name, value } = e.target;
     setEditingDoctor((prev) => ({ ...prev, [name]: value }));
   };
+  const [isImageModalVisible, setImageModalVisible] = useState(false);
+
+  const handleOpenImageModal = () => {
+    setImageModalVisible(true);
+  };
+
+  const handleCloseImageModal = () => {
+    setImageModalVisible(false);
+  };
+
+  const handleSaveImage = async (imageBase64) => {
+    try {
+      await updateDoctorImage(doctor.id, imageBase64);
+      alert("Cập nhật hình ảnh thành công!");
+      fetchDoctor(); // Làm mới dữ liệu sau khi cập nhật
+      handleCloseImageModal();
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   return (
     <div className="container mt-5">
@@ -259,10 +281,13 @@ const DoctorInfo = ({ doctor, fetchDoctor }) => {
         <div className="col-md-4">
           <div className="card text-center">
             <div className="card-body">
-              <img
-                src={doctor.hinh_anh || 'https://via.placeholder.com/450'}
+            <img
+                src={doctor.hinh_anh || "https://via.placeholder.com/450"}
                 alt="Doctor"
                 className="rounded-circle mb-3"
+                onClick={handleOpenImageModal}
+                style={{ cursor: "pointer" }}
+                title="Click để chỉnh sửa ảnh"
               />
               <h4>{`${doctor.hoc_ham} ${doctor.ho} ${doctor.ten}`}</h4>
               <p>ID: {doctor.id}</p>
@@ -572,6 +597,12 @@ const DoctorInfo = ({ doctor, fetchDoctor }) => {
                 isAddingDoctor={false}
               />
             )}
+            <ImageEditModal
+        show={isImageModalVisible}
+        onHide={handleCloseImageModal}
+        onSave={handleSaveImage}
+        doctor={doctor}
+      />
           </div>
         </div>
       </div>

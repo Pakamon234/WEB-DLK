@@ -18,7 +18,7 @@ const DoctorLayout = ({ children }) => {
   return (
     <div className="doctor-page">
       <aside className="sidebar">
-        <h3>Thông tin bác sĩ</h3>
+        <h3>Bác sĩ</h3>
         <ul>
           <li>
             <Link to="/doctor">Thông tin cá nhân</Link>

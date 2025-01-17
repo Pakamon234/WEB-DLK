@@ -123,17 +123,22 @@ const DoctorFormModal = ({
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Hình ảnh</Form.Label>
-            <Form.Control
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              isInvalid={!!errors.hinh_anh}
-            />
-            {localImage && (
-              <img src={localImage} alt="Preview" className="image-preview mt-2" />
-            )}
-          </Form.Group>
+  {isAddingDoctor && (
+    <>
+      <Form.Label>Hình ảnh</Form.Label>
+      <Form.Control
+        type="file"
+        accept="image/*"
+        onChange={handleImageChange}
+        isInvalid={!!errors.hinh_anh}
+      />
+      {localImage && (
+        <img src={localImage} alt="Preview" className="image-preview mt-2" />
+      )}
+    </>
+  )}
+</Form.Group>
+
 
           <Form.Group className="mb-3">
             <Form.Label>Mô tả</Form.Label>

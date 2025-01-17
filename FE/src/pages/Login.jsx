@@ -18,8 +18,8 @@ const Login = () => {
       setMessage('Tên đăng nhập phải có ít nhất 3 ký tự.');
       return false;
     }
-    if (password.length < 3) {
-      setMessage('Mật khẩu phải có ít nhất 6 ký tự.');
+    if (password.length < 1) {
+      setMessage('Mật khẩu phải có ít nhất 1 ký tự.');
       return false;
     }
     return true;
